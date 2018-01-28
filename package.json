@@ -1,0 +1,14 @@
+{
+  "name": "server-fs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "pify": "^3.0.0",
+    "run-on-server": "^1.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "eslint-config-unobtrusive": "^1.2.1"
+  }
+}
