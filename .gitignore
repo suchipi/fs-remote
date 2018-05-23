@@ -1,1 +1,4 @@
 node_modules
+testSandbox
+.DS_Store
+yarn-error.log

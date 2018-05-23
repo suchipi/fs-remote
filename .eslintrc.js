@@ -1,9 +1,8 @@
 module.exports = {
   extends: "unobtrusive",
   env: {
-    node: true
-  },
-  globals: {
-    Promise: false
+    node: true,
+    jest: true,
+    es6: true
   }
 };

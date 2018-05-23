@@ -4,11 +4,30 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "buffer": "^5.0.8",
     "pify": "^3.0.0",
-    "run-on-server": "^1.1.1"
+    "run-on-server": "^3.1.0",
+    "websocket-stream": "^5.1.2"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-run-on-server": "^3.1.0",
     "eslint": "^4.16.0",
-    "eslint-config-unobtrusive": "^1.2.1"
+    "eslint-config-unobtrusive": "^1.2.1",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^22.1.4",
+    "jest-in-case": "^1.0.2",
+    "nodemon": "^1.17.4",
+    "prettier": "^1.12.1",
+    "rimraf": "^2.6.2",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "scripts": {
+    "test": "jest",
+    "server": "nodemon src/server/app.js",
+    "client": "webpack-dev-server --mode development"
   }
 }
