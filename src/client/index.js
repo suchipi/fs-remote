@@ -278,7 +278,7 @@ module.exports = function createFs(serverUrl) {
 
       return unpify(
         runOnServer(
-          serializedArgs => {
+          (name, serializedArgs) => {
             const fs = require("fs");
             const pify = require("pify");
             const { specialMethods } = require("../shared/defs");
@@ -297,7 +297,7 @@ module.exports = function createFs(serverUrl) {
               });
             });
           },
-          [specialMethods[name].args.serialize(args)]
+          [name, specialMethods[name].args.serialize(args)]
         ).then(data => {
           return new fs.Stats(data);
         }),
@@ -318,7 +318,7 @@ module.exports = function createFs(serverUrl) {
       assertType(args, specialMethods[name].args);
 
       const data = runOnServer.sync(
-        serializedArgs => {
+        (name, serializedArgs) => {
           const fs = require("fs");
           const { specialMethods } = require("../shared/defs");
           const args = specialMethods[name].args.deserialize(serializedArgs);
@@ -334,7 +334,7 @@ module.exports = function createFs(serverUrl) {
             _isSymbolicLink: stats.isSymbolicLink()
           });
         },
-        [specialMethods[name].args.serialize(args)]
+        [name, specialMethods[name].args.serialize(args)]
       );
       return new fs.Stats(data);
     };
