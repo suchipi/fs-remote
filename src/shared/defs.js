@@ -1,4 +1,4 @@
-const { types } = require("./types");
+const types = require("serializable-types");
 
 const path = types.union(types.string, types.Buffer, types.URL);
 

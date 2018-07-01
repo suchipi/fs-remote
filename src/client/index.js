@@ -1,6 +1,5 @@
 const createClient = require("run-on-server/client");
 const websocketStreamClient = require("websocket-stream");
-const { assertType } = require("../shared/types");
 const { simpleMethods, specialMethods } = require("../shared/defs");
 
 function unpify(promise, callback) {
@@ -33,7 +32,7 @@ module.exports = function createFs(serverUrl) {
   function asyncFn(name) {
     const retFn = (...passedArgs) => {
       const { args, callback } = getArgsAndAsyncCallback(passedArgs);
-      assertType(args, simpleMethods[name].args);
+      simpleMethods[name].args.assert(args);
 
       unpify(
         runOnServer(
@@ -66,7 +65,7 @@ module.exports = function createFs(serverUrl) {
 
   function syncFn(name) {
     const retFn = (...args) => {
-      assertType(args, simpleMethods[name].args);
+      simpleMethods[name].args.assert(args);
 
       const result = runOnServer.sync(
         (name, serializedArgs) => {
@@ -140,7 +139,7 @@ module.exports = function createFs(serverUrl) {
 
   fs.exists = function exists(...passedArgs) {
     const { args, callback } = getArgsAndAsyncCallback(passedArgs);
-    assertType(args, specialMethods.exists.args);
+    specialMethods.exists.args.assert(args);
 
     runOnServer(
       serializedArgs => {
@@ -161,7 +160,7 @@ module.exports = function createFs(serverUrl) {
   };
 
   fs.createReadStream = function createReadStream(...args) {
-    assertType(args, specialMethods.createReadStream.args);
+    specialMethods.createReadStream.args.assert(args);
 
     const websocketUrl = runOnServer.sync(
       serializedArgs => {
@@ -186,7 +185,7 @@ module.exports = function createFs(serverUrl) {
   };
 
   fs.createWriteStream = function createWriteStream(...args) {
-    assertType(args, specialMethods.createWriteStream.args);
+    specialMethods.createWriteStream.args.assert(args);
 
     const websocketUrl = runOnServer.sync(
       serializedArgs => {
@@ -274,7 +273,7 @@ module.exports = function createFs(serverUrl) {
   function asyncStatFn(name) {
     const retFn = (...passedArgs) => {
       const { args, callback } = getArgsAndAsyncCallback(passedArgs);
-      assertType(args, specialMethods[name].args);
+      specialMethods[name].args.assert(args);
 
       return unpify(
         runOnServer(
@@ -315,7 +314,7 @@ module.exports = function createFs(serverUrl) {
 
   function syncStatFn(name) {
     const retFn = (...args) => {
-      assertType(args, specialMethods[name].args);
+      specialMethods[name].args.assert(args);
 
       const data = runOnServer.sync(
         (name, serializedArgs) => {
@@ -354,7 +353,7 @@ module.exports = function createFs(serverUrl) {
 
   fs.read = function read(...passedArgs) {
     const { args, callback } = getArgsAndAsyncCallback(passedArgs);
-    assertType(args, specialMethods.read.args);
+    specialMethods.read.args.assert(args);
 
     runOnServer(
       serializedArgs => {
@@ -390,7 +389,7 @@ module.exports = function createFs(serverUrl) {
 
   fs.realpath.native = function native(...passedArgs) {
     const { args, callback } = getArgsAndAsyncCallback(passedArgs);
-    assertType(args, simpleMethods.realpath.args);
+    simpleMethods.realpath.args.assert(args);
 
     unpify(
       runOnServer(
@@ -414,7 +413,7 @@ module.exports = function createFs(serverUrl) {
 
   fs.realpathSync.native = function native(...passedArgs) {
     const { args, callback } = getArgsAndAsyncCallback(passedArgs);
-    assertType(args, simpleMethods.realpathSync.args);
+    simpleMethods.realpathSync.args.assert(args);
 
     unpify(
       runOnServer(
@@ -443,7 +442,7 @@ module.exports = function createFs(serverUrl) {
 
   fs.write = function write(...passedArgs) {
     const { args, callback } = getArgsAndAsyncCallback(passedArgs);
-    assertType(args, specialMethods.write.args);
+    specialMethods.write.args.assert(args);
 
     runOnServer(
       serializedArgs => {

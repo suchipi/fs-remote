@@ -5947,6 +5947,13 @@ pretty-format@^22.1.0:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
+pretty-format@^23.2.0:
+  version "23.2.0"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-23.2.0.tgz#3b0aaa63c018a53583373c1cb3a5d96cc5e83017"
+  dependencies:
+    ansi-regex "^3.0.0"
+    ansi-styles "^3.2.0"
+
 private@^0.1.6, private@^0.1.7, private@^0.1.8, private@~0.1.5:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
@@ -6640,6 +6647,12 @@ send@0.16.2:
     on-finished "~2.3.0"
     range-parser "~1.2.0"
     statuses "~1.4.0"
+
+serializable-types@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/serializable-types/-/serializable-types-0.3.0.tgz#b01854ce56047897c1d1ac5c74919d02eae25273"
+  dependencies:
+    pretty-format "^23.2.0"
 
 serializable@^1.0.3:
   version "1.0.3"
