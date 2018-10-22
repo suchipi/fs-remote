@@ -1,4 +1,4 @@
-const createServer = require("fs-remote/createServer");
+const createServer = require("../createServer");
 
 const server = createServer();
 

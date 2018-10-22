@@ -114,6 +114,17 @@ All the methods on the `fs` object returned by `createClient` use XHRs and/or We
 * `fs.FSWatcher`
 * `fs.Stats`
 
+## Notes
+
+The server supports CORS (Cross-Origin Resource Sharing) by default. To disable CORS, pass `{ cors: false }` when constructing the server:
+
+```js
+const createServer = require("fs-remote/createServer");
+
+// createServer returns a net.Server
+const server = createServer({ cors: false });
+```
+
 ## Examples
 
 Check the `examples` folder for examples.

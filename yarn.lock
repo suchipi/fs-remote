@@ -2297,16 +2297,6 @@ fs-readdir-recursive@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs-readdir-recursive/-/fs-readdir-recursive-1.1.0.tgz#e32fc030a2ccee44a6b5371308da54be0b397d27"
   integrity sha512-GNanXlVr2pf02+sPN40XN8HG+ePaNcvM0q5mZBd668Obwb0yD5GiUbZOFgwn8kGMY6I3mdyDJzieUy3PTYyTRA==
 
-fs-remote@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/fs-remote/-/fs-remote-0.1.0.tgz#20e2967665ba94ba10f92d4d35282a1b0eeae45d"
-  integrity sha512-A4k0BiAHc0pO9I7yJ0tFCUOm+O+16dM9FhM5xUqQhUmDw7rgjW1JEHenwNlmEBx478IgObpvwu7Mgh6rFdkp6w==
-  dependencies:
-    pify "^3.0.0"
-    run-on-server "^3.1.0"
-    serializable-types "^0.5.0"
-    websocket-stream "^5.1.2"
-
 fs-write-stream-atomic@^1.0.8:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/fs-write-stream-atomic/-/fs-write-stream-atomic-1.0.10.tgz#b47df53493ef911df75731e70a9ded0189db40c9"

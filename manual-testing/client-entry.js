@@ -1,5 +1,5 @@
 /* global document */
-const createClient = require("fs-remote/createClient");
+const createClient = require("../createClient");
 const buffer = require("buffer");
 
 global.Buffer = buffer.Buffer;
