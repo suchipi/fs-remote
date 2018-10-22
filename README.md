@@ -1,10 +1,10 @@
 # `fs-remote`
 
-`fs-remote` is a drop-in replacement for `fs` designed for the browser that delegates all `fs` operations to a node server. It lets you use `fs` in the browser, and it works the same way it does in node.
+`fs-remote` is a drop-in replacement for Node.js's `fs` module, designed for web browsers. It delegates all `fs` calls to a node server. tl;dr it lets you use a real `fs` module in the browser.
 
 ## Usage
 
-* In node, create and run an fs server:
+* In node, create and run an `fs-remote` server:
 
 ```js
 const createServer = require("fs-remote/createServer");
@@ -17,7 +17,7 @@ server.listen(3000, () => {
 });
 ```
 
-* In the browser, create an `fs` object pointing to your server:
+* In the browser, create an `fs` object pointing to your `fs-remote` server:
 
 ```js
 const createClient = require("fs-remote/createClient");
@@ -111,6 +111,12 @@ All the methods on the `fs` object returned by `createClient` use XHRs and/or We
 * `fs.watch`
 * `fs.watchFile`
 * `fs.write`
+* `fs.FSWatcher`
+* `fs.Stats`
+
+## Examples
+
+Check the `examples` folder for examples.
 
 ## License
 
