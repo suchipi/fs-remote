@@ -404,6 +404,48 @@ const simpleMethods = {
     ),
     result: types.undefined,
     sync: false
+  },
+  writeFile: {
+    args: types.union(
+      types.tuple(
+        path,
+        types.union(types.string, types.Buffer),
+        types.shape({
+          encoding: types.union(types.string, types.null),
+          mode: types.integer,
+          flag: types.string
+        })
+      ),
+      types.tuple(path, types.union(types.string, types.Buffer))
+    ),
+    result: types.undefined,
+    sync: false
+  },
+  writeFileSync: {
+    args: types.union(
+      types.tuple(
+        path,
+        types.union(types.string, types.Buffer),
+        types.shape({
+          encoding: types.union(types.string, types.null),
+          mode: types.integer,
+          flag: types.string
+        })
+      ),
+      types.tuple(path, types.union(types.string, types.Buffer))
+    ),
+    result: types.undefined,
+    sync: true
+  },
+
+  writeSync: {
+    args: types.union(
+      types.tuple(types.integer, types.string),
+      types.tuple(types.integer, types.string, types.integer),
+      types.tuple(types.integer, types.string, types.integer, types.string)
+    ),
+    result: types.integer,
+    sync: true
   }
 };
 

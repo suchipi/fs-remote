@@ -111,6 +111,9 @@ All the methods on the `fs` object returned by `createClient` use XHRs and/or We
 * `fs.watch`
 * `fs.watchFile`
 * `fs.write`
+* `fs.writeFile`
+* `fs.writeFileSync`
+* `fs.writeSync`
 * `fs.FSWatcher`
 * `fs.Stats`
 

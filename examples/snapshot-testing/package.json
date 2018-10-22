@@ -1,0 +1,19 @@
+{
+  "name": "fs-remote-example-webpack-alias",
+  "private": true,
+  "scripts": {
+    "client": "webpack-dev-server --mode development",
+    "server": "node src/server.js"
+  },
+  "devDependencies": {
+    "@suchipi/jasmine-mini": "^3.2.1",
+    "babel-core": "^6.26.3",
+    "babel-loader": "7",
+    "babel-plugin-transform-dirname-filename": "^1.1.0",
+    "chai": "^4.2.0",
+    "chai-jest-snapshot": "^2.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.22.0",
+    "webpack-dev-server": "^3.1.9"
+  }
+}
