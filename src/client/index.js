@@ -1,5 +1,6 @@
 const createClient = require("run-on-server/client");
 const websocketStreamClient = require("websocket-stream");
+const EventEmitter = require("events");
 const { simpleMethods, specialMethods } = require("../shared/defs");
 
 function unpify(promise, callback) {
@@ -478,6 +479,130 @@ module.exports = function createFs(serverUrl) {
       .catch(err => {
         callback(err, null, null);
       });
+  };
+
+  fs.FSWatcher = class FSWatcher extends EventEmitter {};
+
+  fs.watch = function watch(filename, options, listener) {
+    specialMethods.watch.args.assert([filename, options, listener]);
+
+    const websocketUrl = runOnServer.sync(
+      serializedArgs => {
+        const fs = require("fs");
+        const createSocketUrl = require("run-on-server/socket");
+        const { specialMethods } = require("../shared/defs");
+
+        const [filename, options] = specialMethods.watch.args.deserialize(
+          serializedArgs
+        );
+
+        return createSocketUrl(socket => {
+          const listener = (eventType, filename) => {
+            const data = JSON.stringify(
+              specialMethods.watch.socketMsg.serialize({
+                type: "listener",
+                eventType,
+                data: filename
+              })
+            );
+            socket.send(data);
+          };
+
+          const watcher = fs.watch(filename, options, listener);
+
+          watcher.on("change", (eventType, filename) => {
+            const data = JSON.stringify(
+              specialMethods.watch.socketMsg.serialize({
+                type: "watcher",
+                eventType: "change",
+                data: filename
+              })
+            );
+            socket.send(data);
+          });
+
+          watcher.on("close", () => {
+            socket.close();
+          });
+
+          watcher.on("error", err => {
+            const data = JSON.stringify(
+              specialMethods.watch.socketMsg.serialize({
+                type: "watcher",
+                eventType: "error",
+                data: err
+              })
+            );
+            socket.send(data);
+          });
+
+          socket.onmessage = event => {
+            if (event.data === "close") {
+              watcher.close();
+              socket.close();
+            }
+          };
+        });
+      },
+      [specialMethods.watch.args.serialize([filename, options, undefined])]
+    );
+
+    const watcher = new fs.FSWatcher();
+
+    const ws = new global.WebSocket(websocketUrl);
+    ws.onerror = event => {
+      const err = new Error("WebSocket error");
+      err.event = event;
+      watcher.emit("error", err);
+    };
+
+    ws.onmessage = event => {
+      const {
+        type,
+        eventType,
+        data
+      } = specialMethods.watch.socketMsg.deserialize(JSON.parse(event.data));
+      if (type === "listener") {
+        listener(eventType, data);
+      } else if (type === "watcher") {
+        watcher.emit(eventType, data);
+      }
+    };
+
+    ws.onclose = () => {
+      watcher.emit("close");
+    };
+
+    watcher.close = () => {
+      ws.send("close");
+    };
+
+    return watcher;
+  };
+
+  fs.createWriteStream = function createWriteStream(...args) {
+    specialMethods.createWriteStream.args.assert(args);
+
+    const websocketUrl = runOnServer.sync(
+      serializedArgs => {
+        const fs = require("fs");
+        const websocketStreamServer = require("websocket-stream/stream");
+        const createSocketUrl = require("run-on-server/socket");
+        const { specialMethods } = require("../shared/defs");
+        const args = specialMethods.createWriteStream.args.deserialize(
+          serializedArgs
+        );
+
+        return createSocketUrl(socket => {
+          const writeStream = fs.createWriteStream(...args);
+          const socketStream = websocketStreamServer(socket, { binary: true });
+          socketStream.pipe(writeStream);
+        });
+      },
+      [specialMethods.createWriteStream.args.serialize(args)]
+    );
+
+    return websocketStreamClient(websocketUrl);
   };
 
   return fs;

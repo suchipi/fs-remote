@@ -387,7 +387,6 @@ const simpleMethods = {
     result: types.undefined,
     sync: true
   },
-  // TODO: unwatchFile
   utimes: {
     args: types.tuple(
       path,
@@ -406,8 +405,6 @@ const simpleMethods = {
     result: types.undefined,
     sync: false
   }
-  // TODO: watch
-  // TODO: watchFile
 };
 
 const specialMethods = {
@@ -520,7 +517,38 @@ const specialMethods = {
       bufferOrString: types.union(types.Buffer, types.Uint8Array, types.string)
     }),
     sync: false
+  },
+
+  // TODO: watch
+  watch: {
+    args: types.tuple(
+      path,
+      types.maybe(
+        types.union(
+          types.string,
+          types.object({
+            persistent: types.maybe(types.boolean),
+            recursive: types.maybe(types.boolean),
+            encoding: types.maybe(types.string)
+          })
+        )
+      ),
+      types.maybe(types.Function)
+    ),
+    socketMsg: types.object({
+      type: types.string,
+      eventType: types.string,
+      data: types.union(
+        types.undefined,
+        types.string,
+        types.Buffer,
+        types.Error
+      )
+    })
   }
+
+  // TODO: watchFile
+  // TODO: unwatchFile
 };
 
 module.exports = {
