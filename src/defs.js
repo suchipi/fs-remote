@@ -519,7 +519,6 @@ const specialMethods = {
     sync: false
   },
 
-  // TODO: watch
   watch: {
     args: types.union(
       types.tuple(

@@ -1,4 +1,4 @@
-const createFsServer = require("./index");
+const createFsServer = require("../server");
 
 const app = createFsServer();
 

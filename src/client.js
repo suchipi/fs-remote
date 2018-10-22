@@ -1,7 +1,7 @@
 const createClient = require("run-on-server/client");
 const websocketStreamClient = require("websocket-stream");
 const EventEmitter = require("events");
-const { simpleMethods, specialMethods } = require("../shared/defs");
+const { simpleMethods, specialMethods } = require("./defs");
 
 function unpify(promise, callback) {
   promise
@@ -40,7 +40,7 @@ module.exports = function createFs(serverUrl) {
           (name, serializedArgs) => {
             const fs = require("fs");
             const pify = require("pify");
-            const { simpleMethods } = require("../shared/defs");
+            const { simpleMethods } = require("./defs");
             const args = simpleMethods[name].args.deserialize(serializedArgs);
 
             const fsp = pify(fs);
@@ -71,7 +71,7 @@ module.exports = function createFs(serverUrl) {
       const result = runOnServer.sync(
         (name, serializedArgs) => {
           const fs = require("fs");
-          const { simpleMethods } = require("../shared/defs");
+          const { simpleMethods } = require("./defs");
           const args = simpleMethods[name].args.deserialize(serializedArgs);
 
           const result = fs[name](...args);
@@ -145,7 +145,7 @@ module.exports = function createFs(serverUrl) {
     runOnServer(
       serializedArgs => {
         const fs = require("fs");
-        const { specialMethods } = require("../shared/defs");
+        const { specialMethods } = require("./defs");
         const args = specialMethods.exists.args.deserialize(serializedArgs);
 
         return new Promise(resolve => {
@@ -168,7 +168,7 @@ module.exports = function createFs(serverUrl) {
         const fs = require("fs");
         const websocketStreamServer = require("websocket-stream/stream");
         const createSocketUrl = require("run-on-server/socket");
-        const { specialMethods } = require("../shared/defs");
+        const { specialMethods } = require("./defs");
         const args = specialMethods.createReadStream.args.deserialize(
           serializedArgs
         );
@@ -193,7 +193,7 @@ module.exports = function createFs(serverUrl) {
         const fs = require("fs");
         const websocketStreamServer = require("websocket-stream/stream");
         const createSocketUrl = require("run-on-server/socket");
-        const { specialMethods } = require("../shared/defs");
+        const { specialMethods } = require("./defs");
         const args = specialMethods.createWriteStream.args.deserialize(
           serializedArgs
         );
@@ -281,7 +281,7 @@ module.exports = function createFs(serverUrl) {
           (name, serializedArgs) => {
             const fs = require("fs");
             const pify = require("pify");
-            const { specialMethods } = require("../shared/defs");
+            const { specialMethods } = require("./defs");
             const args = specialMethods[name].args.deserialize(serializedArgs);
 
             const fsp = pify(fs);
@@ -320,7 +320,7 @@ module.exports = function createFs(serverUrl) {
       const data = runOnServer.sync(
         (name, serializedArgs) => {
           const fs = require("fs");
-          const { specialMethods } = require("../shared/defs");
+          const { specialMethods } = require("./defs");
           const args = specialMethods[name].args.deserialize(serializedArgs);
 
           const stats = fs[name](...args);
@@ -359,7 +359,7 @@ module.exports = function createFs(serverUrl) {
     runOnServer(
       serializedArgs => {
         const fs = require("fs");
-        const { specialMethods } = require("../shared/defs");
+        const { specialMethods } = require("./defs");
         const args = specialMethods.read.args.deserialize(serializedArgs);
 
         return new Promise((resolve, reject) => {
@@ -397,7 +397,7 @@ module.exports = function createFs(serverUrl) {
         serializedArgs => {
           const fs = require("fs");
           const pify = require("pify");
-          const { simpleMethods } = require("../shared/defs");
+          const { simpleMethods } = require("./defs");
           const args = simpleMethods.realpath.args.deserialize(serializedArgs);
 
           return pify(fs.realpath.native)(...args).then(result => {
@@ -421,7 +421,7 @@ module.exports = function createFs(serverUrl) {
         serializedArgs => {
           const fs = require("fs");
           const pify = require("pify");
-          const { simpleMethods } = require("../shared/defs");
+          const { simpleMethods } = require("./defs");
           const args = simpleMethods.realpathSync.args.deserialize(
             serializedArgs
           );
@@ -448,7 +448,7 @@ module.exports = function createFs(serverUrl) {
     runOnServer(
       serializedArgs => {
         const fs = require("fs");
-        const { specialMethods } = require("../shared/defs");
+        const { specialMethods } = require("./defs");
         const args = specialMethods.write.args.deserialize(serializedArgs);
 
         return new Promise((resolve, reject) => {
@@ -500,7 +500,7 @@ module.exports = function createFs(serverUrl) {
       serializedArgs => {
         const fs = require("fs");
         const createSocketUrl = require("run-on-server/socket");
-        const { specialMethods } = require("../shared/defs");
+        const { specialMethods } = require("./defs");
 
         const [filename, options] = specialMethods.watch.args.deserialize(
           serializedArgs
@@ -591,8 +591,6 @@ module.exports = function createFs(serverUrl) {
   };
 
   const watchedFiles = new Set();
-  // TODO remove next line
-  global.watchedFiles = watchedFiles;
 
   function normalizePath(pathObj) {
     return pathObj.toString().replace(/^file:\/\//, "");
@@ -615,7 +613,7 @@ module.exports = function createFs(serverUrl) {
       serializedArgs => {
         const fs = require("fs");
         const createSocketUrl = require("run-on-server/socket");
-        const { specialMethods } = require("../shared/defs");
+        const { specialMethods } = require("./defs");
         const [
           filename,
           options

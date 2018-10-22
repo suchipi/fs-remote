@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    [
+      "run-on-server",
+      {
+        "evalRequire": {
+          "enabled": false
+        },
+        "idMappings": {
+          "enabled": true,
+          "outputPath": "./dist/idMappings.js"
+        }
+      }
+    ]
+  ]
+}

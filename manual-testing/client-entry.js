@@ -1,5 +1,5 @@
 /* global document */
-const createFs = require("./index");
+const createFs = require("../client");
 const buffer = require("buffer");
 
 global.Buffer = buffer.Buffer;
