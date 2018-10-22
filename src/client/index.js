@@ -483,8 +483,18 @@ module.exports = function createFs(serverUrl) {
 
   fs.FSWatcher = class FSWatcher extends EventEmitter {};
 
-  fs.watch = function watch(filename, options, listener) {
-    specialMethods.watch.args.assert([filename, options, listener]);
+  fs.watch = function watch(filename, ...args) {
+    specialMethods.watch.args.assert([filename, ...args]);
+
+    let options;
+    let listener;
+    if (typeof args[0] === "function") {
+      options = undefined;
+      listener = args[0];
+    } else if (typeof args[1] === "function") {
+      options = args[0];
+      listener = args[1];
+    }
 
     const websocketUrl = runOnServer.sync(
       serializedArgs => {
@@ -562,7 +572,7 @@ module.exports = function createFs(serverUrl) {
         eventType,
         data
       } = specialMethods.watch.socketMsg.deserialize(JSON.parse(event.data));
-      if (type === "listener") {
+      if (type === "listener" && listener != null) {
         listener(eventType, data);
       } else if (type === "watcher") {
         watcher.emit(eventType, data);
@@ -580,29 +590,107 @@ module.exports = function createFs(serverUrl) {
     return watcher;
   };
 
-  fs.createWriteStream = function createWriteStream(...args) {
-    specialMethods.createWriteStream.args.assert(args);
+  const watchedFiles = new Set();
+  // TODO remove next line
+  global.watchedFiles = watchedFiles;
 
-    const websocketUrl = runOnServer.sync(
+  function normalizePath(pathObj) {
+    return pathObj.toString().replace(/^file:\/\//, "");
+  }
+
+  fs.watchFile = function watchFile(filename, ...args) {
+    specialMethods.watchFile.args.assert([filename, ...args]);
+
+    let options;
+    let listener;
+    if (args.length === 2) {
+      options = args[0];
+      listener = args[1];
+    } else {
+      options = undefined;
+      listener = args[0];
+    }
+
+    runOnServer(
       serializedArgs => {
         const fs = require("fs");
-        const websocketStreamServer = require("websocket-stream/stream");
         const createSocketUrl = require("run-on-server/socket");
         const { specialMethods } = require("../shared/defs");
-        const args = specialMethods.createWriteStream.args.deserialize(
-          serializedArgs
-        );
+        const [
+          filename,
+          options
+        ] = specialMethods.watchFile.argsOverWire.deserialize(serializedArgs);
+
+        const statsToData = stats => {
+          return Object.assign({}, stats, {
+            _isBlockDevice: stats.isBlockDevice(),
+            _isCharacterDevice: stats.isCharacterDevice(),
+            _isDirectory: stats.isDirectory(),
+            _isFIFO: stats.isFIFO(),
+            _isFile: stats.isFile(),
+            _isSocket: stats.isSocket(),
+            _isSymbolicLink: stats.isSymbolicLink()
+          });
+        };
 
         return createSocketUrl(socket => {
-          const writeStream = fs.createWriteStream(...args);
-          const socketStream = websocketStreamServer(socket, { binary: true });
-          socketStream.pipe(writeStream);
+          const listener = (current, previous) => {
+            const data = JSON.stringify({
+              current: statsToData(current),
+              previous: statsToData(previous)
+            });
+            socket.send(data);
+          };
+
+          socket.onmessage = event => {
+            if (event.data === "stop") {
+              fs.unwatchFile(filename, listener);
+              socket.close();
+            }
+          };
+
+          if (options) {
+            fs.watchFile(filename, options, listener);
+          } else {
+            fs.watchFile(filename, listener);
+          }
         });
       },
-      [specialMethods.createWriteStream.args.serialize(args)]
-    );
+      [specialMethods.watchFile.argsOverWire.serialize([filename, options])]
+    ).then(websocketUrl => {
+      const ws = new global.WebSocket(websocketUrl);
 
-    return websocketStreamClient(websocketUrl);
+      ws.onmessage = event => {
+        const { current, previous } = JSON.parse(event.data);
+        listener(new fs.Stats(current), new fs.Stats(previous));
+      };
+
+      const normalizedPath = normalizePath(filename);
+      watchedFiles.add({
+        normalizedPath,
+        listener,
+        stop: () => {
+          ws.send("stop");
+        }
+      });
+    });
+  };
+
+  fs.unwatchFile = function unwatchFile(filename, listener) {
+    specialMethods.unwatchFile.args.assert([filename, listener]);
+    const normalizedPath = normalizePath(filename);
+
+    Array.from(watchedFiles).forEach(entry => {
+      if (
+        listener
+          ? entry.normalizedPath === normalizedPath &&
+            entry.listener === listener
+          : entry.normalizedPath === normalizedPath
+      ) {
+        entry.stop();
+        watchedFiles.delete(entry);
+      }
+    });
   };
 
   return fs;

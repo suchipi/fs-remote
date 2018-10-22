@@ -521,9 +521,9 @@ const specialMethods = {
 
   // TODO: watch
   watch: {
-    args: types.tuple(
-      path,
-      types.maybe(
+    args: types.union(
+      types.tuple(
+        path,
         types.union(
           types.string,
           types.object({
@@ -531,9 +531,10 @@ const specialMethods = {
             recursive: types.maybe(types.boolean),
             encoding: types.maybe(types.string)
           })
-        )
+        ),
+        types.maybe(types.Function)
       ),
-      types.maybe(types.Function)
+      types.tuple(path, types.maybe(types.Function))
     ),
     socketMsg: types.object({
       type: types.string,
@@ -545,10 +546,34 @@ const specialMethods = {
         types.Error
       )
     })
-  }
+  },
 
-  // TODO: watchFile
-  // TODO: unwatchFile
+  watchFile: {
+    args: types.union(
+      types.tuple(
+        path,
+        types.object({
+          persistent: types.maybe(types.boolean),
+          interval: types.maybe(types.integer)
+        }),
+        types.Function
+      ),
+      types.tuple(path, types.Function)
+    ),
+    argsOverWire: types.tuple(
+      path,
+      types.maybe(
+        types.object({
+          persistent: types.maybe(types.boolean),
+          interval: types.maybe(types.integer)
+        })
+      )
+    )
+  },
+
+  unwatchFile: {
+    args: types.tuple(path, types.maybe(types.Function))
+  }
 };
 
 module.exports = {

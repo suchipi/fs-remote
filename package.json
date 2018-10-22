@@ -27,7 +27,6 @@
     "webpack-dev-server": "^3.1.4"
   },
   "scripts": {
-    "test": "jest",
     "server": "nodemon src/server/app.js",
     "client": "webpack-dev-server --mode development"
   }
