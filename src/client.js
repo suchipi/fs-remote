@@ -27,7 +27,7 @@ function getArgsAndAsyncCallback(args) {
   return { args, callback };
 }
 
-module.exports = function createFs(serverUrl) {
+module.exports = function createFsClient(serverUrl) {
   const runOnServer = createClient(serverUrl);
 
   function asyncFn(name) {
