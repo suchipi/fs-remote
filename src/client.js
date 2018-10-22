@@ -1,4 +1,4 @@
-const createClient = require("run-on-server/client");
+const createRosClient = require("run-on-server/client");
 const websocketStreamClient = require("websocket-stream");
 const EventEmitter = require("events");
 const { simpleMethods, specialMethods } = require("./defs");
@@ -27,8 +27,8 @@ function getArgsAndAsyncCallback(args) {
   return { args, callback };
 }
 
-module.exports = function createFsClient(serverUrl) {
-  const runOnServer = createClient(serverUrl);
+module.exports = function createClient(serverUrl) {
+  const runOnServer = createRosClient(serverUrl);
 
   function asyncFn(name) {
     const retFn = (...passedArgs) => {

@@ -1,3 +1,3 @@
-const createFsClient = require("../../../createFsClient");
+const createClient = require("../../../createClient");
 
-module.exports = createFsClient("http://localhost:3000");
+module.exports = createClient("http://localhost:3000");

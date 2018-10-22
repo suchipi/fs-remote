@@ -1,4 +1,4 @@
-This example uses `fs-server` with webpack, aliasing `fs` in the webpack config, so that clientside code can transparently require `fs` and get a working `fs` module.
+This example uses `fs-remote` with webpack, aliasing `fs` in the webpack config, so that clientside code can transparently require `fs` and get a working `fs` module.
 
 ### Instructions
 

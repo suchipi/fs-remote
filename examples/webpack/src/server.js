@@ -1,8 +1,8 @@
-const createFsServer = require("../../../createFsServer");
+const createServer = require("../../../createServer");
 
-// createFsServer returns a net.Server
-const server = createFsServer();
+// createServer returns a net.Server
+const server = createServer();
 
 server.listen(3000, () => {
-  console.log("fs-server server is listening on port 3000");
+  console.log("fs-remote server is listening on port 3000");
 });
