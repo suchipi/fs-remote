@@ -1,8 +1,10 @@
 {
   "name": "fs-remote",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "index.js",
   "license": "MIT",
+  "repository": "suchipi/fs-remote",
+  "keywords": ["fs", "browser", "server", "client", "api", "node"],
   "dependencies": {
     "pify": "^3.0.0",
     "run-on-server": "^3.1.0",
