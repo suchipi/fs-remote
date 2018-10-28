@@ -17,11 +17,27 @@ server.listen(3000, () => {
 });
 ```
 
-* In the browser, create an `fs` object pointing to your `fs-remote` server:
+* In the browser, load `fs-remote`'s `createClient` function:
+
+  * If you are using `webpack` or `browserify`, you can use `require`:
+
+  ```js
+  const createClient = require("fs-remote/createClient");
+  ```
+
+  * Otherwise, you can use a script tag and find `createClient` on the global `fsRemote` varaible:
+
+  ```html
+  <script src="https://unpkg.com/fs-remote@0.1.4/dist/umd.js"></script>
+  ```
+
+  ```js
+  const createClient = fsRemote.createClient;
+  ```
+
+* In the browser, use `createClient` to create an `fs` object pointing to your `fs-remote` server:
 
 ```js
-const createClient = require("fs-remote/createClient");
-
 // Pass in the URL to the server you created
 const fs = createClient("http://localhost:3000");
 ```
