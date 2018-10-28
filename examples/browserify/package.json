@@ -1,0 +1,16 @@
+{
+  "name": "fs-remote-example-browserify",
+  "private": true,
+  "scripts": {
+    "build": "browserify src/client.js -o dist/client.js",
+    "build:watch": "watchify src/client.js -o dist/client.js",
+    "http-server": "http-server dist",
+    "server": "node src/server.js"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "http-server": "^0.11.1",
+    "watchify": "^3.11.0"
+  },
+  "dependencies": {}
+}
