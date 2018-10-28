@@ -4,3 +4,5 @@ src
 .babelrc
 .eslintrc.js
 .prettierrc
+webpack.config.js
+index.html
