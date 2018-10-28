@@ -1,5 +1,5 @@
 {
-  "name": "fs-remote-example-webpack-alias",
+  "name": "fs-remote-example-snapshot-testing",
   "private": true,
   "scripts": {
     "client": "webpack-dev-server --mode development",
@@ -15,5 +15,8 @@
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.22.0",
     "webpack-dev-server": "^3.1.9"
+  },
+  "dependencies": {
+    "fs-remote": "^0.1.3"
   }
 }

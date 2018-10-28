@@ -10,5 +10,7 @@
     "webpack": "^4.22.0",
     "webpack-dev-server": "^3.1.9"
   },
-  "dependencies": {}
+  "dependencies": {
+    "fs-remote": "^0.1.3"
+  }
 }
