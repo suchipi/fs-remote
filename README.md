@@ -146,7 +146,7 @@ const server = createServer({ cors: false });
 
 ## Examples
 
-Check the `examples` folder for examples.
+Check the [`examples` folder](https://github.com/suchipi/fs-remote/tree/master/examples) for examples.
 
 ## License
 
