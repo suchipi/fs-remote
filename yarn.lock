@@ -2,18 +2,18 @@
 # yarn lockfile v1
 
 
-"@run-on-server/client@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@run-on-server/client/-/client-2.2.0.tgz#cb07245e7f72c11620f9fe5937f0d85805e6356a"
-  integrity sha512-c6DJX7h4KgI9afi2GYoLLlbhrscn+5bZhE9pt9LzmRA4qjOByW4eW/jhXSOAKIqW8QANqAr9/svK+GQ6g/muHg==
+"@run-on-server/client@2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@run-on-server/client/-/client-2.2.2.tgz#d01e88c7119e6b1b2a8176b4a1f35b54ac6205cc"
+  integrity sha512-H7FE1PuSip2cy2484/GiB///c9DaDBwZaA1wbCzz8wK0zLwQia4bRFREJ7McCX+bhje0rqfKKrSx4VmxuKxdPQ==
   dependencies:
     babel-runtime "^6.26.0"
     xmlhttprequest "^1.8.0"
 
-"@run-on-server/server@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@run-on-server/server/-/server-3.0.1.tgz#0ea5b837b1c183c59c28e13ac8328b73a02968b9"
-  integrity sha512-06qqmFxqZ2OKb+JcEvQRC673Z9CsqQdvFitG4tiUjp1GLz8ySMfhilxVxW6alP4zVv/DKtfq1b1Yc6M0mAs1uw==
+"@run-on-server/server@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@run-on-server/server/-/server-3.0.2.tgz#a2ff28c1f5ec63c75a69e37ba25f51c97c8513ac"
+  integrity sha512-N576EsanyjzNlpKuWRK09e+hBzj5Z8T+5PtLtg8jLsrdEjVXEM/1ErLFKEIvVQGD7W/HeitWlLuXiOUAFFyRnA==
   dependencies:
     uid "^0.0.2"
     acorn "^5.3.0"
@@ -4782,13 +4782,13 @@ run-async@^2.2.0:
   dependencies:
     is-promise "^2.1.0"
 
-run-on-server@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/run-on-server/-/run-on-server-3.1.0.tgz#a5b7787be03ef0315ef80dcff4f8e89365eaded9"
-  integrity sha512-Pc82Xrbxnu6froVOrFz9VEkFUcJ7zc58ExOV9neRNn3caCpGEZBoHV01OgRrx13oBpdw4pHQFdGgr45Sc+BngQ==
+run-on-server@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/run-on-server/-/run-on-server-3.1.1.tgz#d72f62802b60426a3dc03097c23fb3a6959cadb2"
+  integrity sha512-r4RAmi1/KQyrEHytpKRKsRY1CvYWMkYta0rLCUteSOGB+JJM89+mGO0wnQip56srU1wGW/hkPqox+kexCGsGcA==
   dependencies:
-    "@run-on-server/client" "2.2.0"
-    "@run-on-server/server" "3.0.1"
+    "@run-on-server/client" "2.2.2"
+    "@run-on-server/server" "3.0.2"
     babel-runtime "^6.26.0"
 
 run-queue@^1.0.0, run-queue@^1.0.3:
