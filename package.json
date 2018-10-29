@@ -1,17 +1,10 @@
 {
   "name": "fs-remote",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "index.js",
   "license": "MIT",
   "repository": "suchipi/fs-remote",
-  "keywords": [
-    "fs",
-    "browser",
-    "server",
-    "client",
-    "api",
-    "node"
-  ],
+  "keywords": ["fs", "browser", "server", "client", "api", "node"],
   "dependencies": {
     "pify": "^3.0.0",
     "run-on-server": "^3.1.1",
@@ -31,7 +24,8 @@
     "webpack-dev-server": "^3.1.4"
   },
   "scripts": {
-    "build": "rm -rf dist/*; babel src --out-dir dist && webpack && rm dist/umdRoot.js",
+    "build":
+      "rm -rf dist/*; babel src --out-dir dist && webpack && rm dist/umdRoot.js",
     "server": "node manual-testing/server-app.js",
     "client": "cd manual-testing; webpack-dev-server --mode development"
   }
