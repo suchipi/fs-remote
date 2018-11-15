@@ -28,7 +28,7 @@ server.listen(3000, () => {
   * Otherwise, you can use a script tag and find `createClient` on the global `fsRemote` varaible:
 
   ```html
-  <script src="https://unpkg.com/fs-remote@0.1.8/dist/umd.js"></script>
+  <script src="https://unpkg.com/fs-remote@0.1.9/dist/umd.js"></script>
   ```
 
   ```js
