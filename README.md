@@ -25,7 +25,7 @@ server.listen(3000, () => {
   const createClient = require("fs-remote/createClient");
   ```
 
-  * Otherwise, you can use a script tag and find `createClient` on the global `fsRemote` varaible:
+  * Otherwise, you can use a script tag and find `createClient` on the global `fsRemote` variable:
 
   ```html
   <script src="https://unpkg.com/fs-remote@0.1.9/dist/umd.js"></script>
