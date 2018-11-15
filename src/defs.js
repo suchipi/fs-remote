@@ -1,43 +1,78 @@
 const types = require("serializable-types");
 
 const path = types.union(types.string, types.Buffer, types.URL);
+const typedArray = types.union(
+  types.Float32Array,
+  types.Float64Array,
+  types.Int16Array,
+  types.Int32Array,
+  types.Int8Array,
+  types.Uint16Array,
+  types.Uint32Array,
+  types.Uint8Array,
+  types.Uint8ClampedArray
+);
 
 const simpleMethods = {
   access: {
-    args: types.tuple(path, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(path, types.maybe(types.integer))
+    ),
     result: types.undefined,
     sync: false
   },
   accessSync: {
-    args: types.tuple(path, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(path, types.maybe(types.integer))
+    ),
     result: types.undefined,
     sync: true
   },
   appendFile: {
-    args: types.tuple(
-      path,
-      types.union(types.string, types.Buffer),
-      types.maybe(
-        types.shape({
-          encoding: types.union(types.string, types.null),
-          mode: types.integer,
-          flag: types.string
-        })
+    args: types.union(
+      types.tuple(
+        types.union(path, types.number),
+        types.union(types.string, types.Buffer)
+      ),
+      types.tuple(
+        types.union(path, types.number),
+        types.union(types.string, types.Buffer),
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              encoding: types.union(types.string, types.null),
+              mode: types.integer,
+              flag: types.string
+            })
+          )
+        )
       )
     ),
     result: types.undefined,
     sync: false
   },
   appendFileSync: {
-    args: types.tuple(
-      path,
-      types.union(types.string, types.Buffer),
-      types.maybe(
-        types.shape({
-          encoding: types.union(types.string, types.null),
-          mode: types.integer,
-          flag: types.string
-        })
+    args: types.union(
+      types.tuple(
+        types.union(path, types.number),
+        types.union(types.string, types.Buffer)
+      ),
+      types.tuple(
+        types.union(path, types.number),
+        types.union(types.string, types.Buffer),
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              encoding: types.union(types.string, types.null),
+              mode: types.integer,
+              flag: types.string
+            })
+          )
+        )
       )
     ),
     result: types.undefined,
@@ -74,12 +109,18 @@ const simpleMethods = {
     sync: true
   },
   copyFile: {
-    args: types.tuple(path, path, types.maybe(types.number)),
+    args: types.union(
+      types.tuple(path, path),
+      types.tuple(path, path, types.maybe(types.number))
+    ),
     result: types.undefined,
     sync: false
   },
   copyFileSync: {
-    args: types.tuple(path, path, types.maybe(types.number)),
+    args: types.union(
+      types.tuple(path, path),
+      types.tuple(path, path, types.maybe(types.number))
+    ),
     result: types.undefined,
     sync: true
   },
@@ -129,12 +170,18 @@ const simpleMethods = {
     sync: true
   },
   ftruncate: {
-    args: types.tuple(types.integer, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(types.integer),
+      types.tuple(types.integer, types.maybe(types.integer))
+    ),
     result: types.undefined,
     sync: false
   },
   ftruncateSync: {
-    args: types.tuple(types.integer, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(types.integer),
+      types.tuple(types.integer, types.maybe(types.integer))
+    ),
     result: types.undefined,
     sync: true
   },
@@ -187,83 +234,146 @@ const simpleMethods = {
     sync: true
   },
   mkdir: {
-    args: types.tuple(path, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(
+            types.integer,
+            types.shape({
+              recursive: types.boolean,
+              mode: types.integer
+            })
+          )
+        )
+      )
+    ),
     result: types.undefined,
     sync: false
   },
   mkdirSync: {
-    args: types.tuple(path, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(
+            types.integer,
+            types.shape({
+              recursive: types.boolean,
+              mode: types.integer
+            })
+          )
+        )
+      )
+    ),
     result: types.undefined,
     sync: true
   },
   mkdtemp: {
-    args: types.tuple(
-      types.string,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(types.string),
+      types.tuple(
+        types.string,
+        types.maybe(
+          types.union(types.string, types.shape({ encoding: types.string }))
+        )
       )
     ),
     result: types.string,
     sync: false
   },
   mkdtempSync: {
-    args: types.tuple(
-      types.string,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(types.string),
+      types.tuple(
+        types.string,
+        types.maybe(
+          types.union(types.string, types.shape({ encoding: types.string }))
+        )
       )
     ),
     result: types.string,
     sync: false
   },
   open: {
-    args: types.tuple(
-      path,
-      types.union(types.string, types.number),
-      types.maybe(types.integer)
+    args: types.union(
+      types.tuple(path),
+      types.tuple(path, types.maybe(types.union(types.string, types.number))),
+      types.tuple(
+        path,
+        types.maybe(types.union(types.string, types.number)),
+        types.maybe(types.integer)
+      )
     ),
     result: types.integer,
     sync: false
   },
   openSync: {
-    args: types.tuple(
-      path,
-      types.union(types.string, types.number),
-      types.maybe(types.integer)
+    args: types.union(
+      types.tuple(path),
+      types.tuple(path, types.maybe(types.union(types.string, types.number))),
+      types.tuple(
+        path,
+        types.maybe(types.union(types.string, types.number)),
+        types.maybe(types.integer)
+      )
     ),
     result: types.integer,
     sync: true
   },
   readdir: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              encoding: types.string,
+              withFileTypes: types.boolean
+            })
+          )
+        )
       )
     ),
     result: types.union(types.array(types.string), types.array(types.Buffer)),
     sync: false
   },
   readdirSync: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              encoding: types.string,
+              withFileTypes: types.boolean
+            })
+          )
+        )
       )
     ),
     result: types.union(types.array(types.string), types.array(types.Buffer)),
     sync: true
   },
   readFile: {
-    args: types.tuple(
-      types.union(path, types.integer),
-      types.maybe(
-        types.union(
-          types.string,
-          types.shape({
-            encoding: types.union(types.string, types.null),
-            flag: types.string
-          })
+    args: types.union(
+      types.tuple(types.union(path, types.integer)),
+      types.tuple(
+        types.union(path, types.integer),
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              encoding: types.union(types.string, types.null),
+              flag: types.string
+            })
+          )
         )
       )
     ),
@@ -271,15 +381,18 @@ const simpleMethods = {
     sync: false
   },
   readFileSync: {
-    args: types.tuple(
-      types.union(path, types.integer),
-      types.maybe(
-        types.union(
-          types.string,
-          types.shape({
-            encoding: types.union(types.string, types.null),
-            flag: types.string
-          })
+    args: types.union(
+      types.tuple(types.union(path, types.integer)),
+      types.tuple(
+        types.union(path, types.integer),
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              encoding: types.union(types.string, types.null),
+              flag: types.string
+            })
+          )
         )
       )
     ),
@@ -287,20 +400,26 @@ const simpleMethods = {
     sync: true
   },
   readlink: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(types.string, types.shape({ encoding: types.string }))
+        )
       )
     ),
     result: types.union(types.string, types.Buffer),
     sync: false
   },
   readlinkSync: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(types.string, types.shape({ encoding: types.string }))
+        )
       )
     ),
     result: types.union(types.string, types.Buffer),
@@ -309,7 +428,7 @@ const simpleMethods = {
   readSync: {
     args: types.tuple(
       types.integer,
-      types.union(types.Buffer, types.Uint8Array),
+      types.union(types.Buffer, typedArray),
       types.integer,
       types.integer,
       types.integer
@@ -318,20 +437,26 @@ const simpleMethods = {
     sync: true
   },
   realpath: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(types.string, types.shape({ encoding: types.string }))
+        )
       )
     ),
     result: types.union(types.string, types.Buffer),
     sync: false
   },
   realpathSync: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(types.string, types.shape({ encoding: types.string }))
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(types.string, types.shape({ encoding: types.string }))
+        )
       )
     ),
     result: types.union(types.string, types.Buffer),
@@ -358,22 +483,34 @@ const simpleMethods = {
     sync: true
   },
   symlink: {
-    args: types.tuple(path, path, types.maybe(types.string)),
+    args: types.union(
+      types.tuple(path, path),
+      types.tuple(path, path, types.maybe(types.string))
+    ),
     result: types.undefined,
     sync: false
   },
   symlinkSync: {
-    args: types.tuple(path, path, types.maybe(types.string)),
+    args: types.union(
+      types.tuple(path, path),
+      types.tuple(path, path, types.maybe(types.string))
+    ),
     result: types.undefined,
     sync: true
   },
   truncate: {
-    args: types.tuple(path, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(path, types.maybe(types.integer))
+    ),
     result: types.undefined,
     sync: false
   },
   truncateSync: {
-    args: types.tuple(path, types.maybe(types.integer)),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(path, types.maybe(types.integer))
+    ),
     result: types.undefined,
     sync: true
   },
@@ -407,32 +544,42 @@ const simpleMethods = {
   },
   writeFile: {
     args: types.union(
+      types.tuple(path, types.union(types.string, types.Buffer)),
       types.tuple(
         path,
         types.union(types.string, types.Buffer),
-        types.shape({
-          encoding: types.union(types.string, types.null),
-          mode: types.integer,
-          flag: types.string
-        })
-      ),
-      types.tuple(path, types.union(types.string, types.Buffer))
+        types.maybe(
+          types.union(
+            types.shape({
+              encoding: types.union(types.string, types.null),
+              mode: types.integer,
+              flag: types.string
+            }),
+            types.string
+          )
+        )
+      )
     ),
     result: types.undefined,
     sync: false
   },
   writeFileSync: {
     args: types.union(
+      types.tuple(path, types.union(types.string, types.Buffer)),
       types.tuple(
         path,
         types.union(types.string, types.Buffer),
-        types.shape({
-          encoding: types.union(types.string, types.null),
-          mode: types.integer,
-          flag: types.string
-        })
-      ),
-      types.tuple(path, types.union(types.string, types.Buffer))
+        types.maybe(
+          types.union(
+            types.shape({
+              encoding: types.union(types.string, types.null),
+              mode: types.integer,
+              flag: types.string
+            }),
+            types.string
+          )
+        )
+      )
     ),
     result: types.undefined,
     sync: true
@@ -441,8 +588,13 @@ const simpleMethods = {
   writeSync: {
     args: types.union(
       types.tuple(types.integer, types.string),
-      types.tuple(types.integer, types.string, types.integer),
-      types.tuple(types.integer, types.string, types.integer, types.string)
+      types.tuple(types.integer, types.string, types.maybe(types.integer)),
+      types.tuple(
+        types.integer,
+        types.string,
+        types.maybe(types.integer),
+        types.maybe(types.string)
+      )
     ),
     result: types.integer,
     sync: true
@@ -451,40 +603,46 @@ const simpleMethods = {
 
 const specialMethods = {
   createReadStream: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(
-          types.string,
-          types.shape({
-            flags: types.string,
-            encoding: types.union(types.null, types.string),
-            fd: types.union(types.null, types.integer),
-            mode: types.integer,
-            autoClose: types.boolean,
-            start: types.integer,
-            end: types.integer,
-            highWaterMark: types.integer
-          })
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              flags: types.string,
+              encoding: types.union(types.null, types.string),
+              fd: types.union(types.null, types.integer),
+              mode: types.integer,
+              autoClose: types.boolean,
+              start: types.integer,
+              end: types.union(types.integer, types.Infinity),
+              highWaterMark: types.integer
+            })
+          )
         )
       )
     ),
     sync: true
   },
   createWriteStream: {
-    args: types.tuple(
-      path,
-      types.maybe(
-        types.union(
-          types.string,
-          types.shape({
-            flags: types.string,
-            encoding: types.string,
-            fd: types.union(types.null, types.integer),
-            mode: types.integer,
-            autoClose: types.boolean,
-            start: types.integer
-          })
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(
+            types.string,
+            types.shape({
+              flags: types.string,
+              encoding: types.string,
+              fd: types.union(types.null, types.integer),
+              mode: types.integer,
+              autoClose: types.boolean,
+              start: types.integer
+            })
+          )
         )
       )
     ),
@@ -498,27 +656,67 @@ const specialMethods = {
   },
 
   fstat: {
-    args: types.tuple(types.integer),
+    args: types.union(
+      types.tuple(types.integer),
+      types.tuple(
+        types.integer,
+        types.maybe(
+          types.shape({
+            bigint: types.boolean
+          })
+        )
+      )
+    ),
     sync: false
   },
   fstatSync: {
-    args: types.tuple(types.integer),
+    args: types.union(
+      types.tuple(types.integer),
+      types.tuple(
+        types.integer,
+        types.maybe(
+          types.shape({
+            bigint: types.boolean
+          })
+        )
+      )
+    ),
     sync: true
   },
 
   lstat: {
-    args: types.tuple(path),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.shape({
+            bigint: types.boolean
+          })
+        )
+      )
+    ),
     sync: false
   },
   lstatSync: {
-    args: types.tuple(path),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.shape({
+            bigint: types.boolean
+          })
+        )
+      )
+    ),
     sync: true
   },
 
   read: {
     args: types.tuple(
       types.integer,
-      types.union(types.Buffer, types.Uint8Array),
+      types.union(types.Buffer, typedArray),
       types.integer,
       types.integer,
       types.integer
@@ -529,28 +727,62 @@ const specialMethods = {
   },
 
   stat: {
-    args: types.tuple(path),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.shape({
+            bigint: types.boolean
+          })
+        )
+      )
+    ),
     sync: false
   },
   statSync: {
-    args: types.tuple(path),
+    args: types.union(
+      types.tuple(path),
+      types.tuple(
+        path,
+        types.maybe(
+          types.shape({
+            bigint: types.boolean
+          })
+        )
+      )
+    ),
     sync: true
   },
 
   write: {
     args: types.union(
-      types.tuple(
-        types.integer,
-        types.union(types.Buffer, types.Uint8Array),
-        types.maybe(types.integer),
-        types.maybe(types.integer),
-        types.maybe(types.integer)
-      ),
+      types.tuple(types.integer, types.string),
+      types.tuple(types.integer, types.string, types.maybe(types.integer)),
       types.tuple(
         types.integer,
         types.string,
         types.maybe(types.integer),
         types.maybe(types.string)
+      ),
+      types.tuple(types.integer, types.union(types.Buffer, typedArray)),
+      types.tuple(
+        types.integer,
+        types.union(types.Buffer, typedArray),
+        types.maybe(types.integer)
+      ),
+      types.tuple(
+        types.integer,
+        types.union(types.Buffer, typedArray),
+        types.maybe(types.integer),
+        types.maybe(types.integer)
+      ),
+      types.tuple(
+        types.integer,
+        types.union(types.Buffer, typedArray),
+        types.maybe(types.integer),
+        types.maybe(types.integer),
+        types.maybe(types.integer)
       )
     ),
     // This result is synthetic; the actual method calls the callback with multiple arguments.
@@ -563,19 +795,35 @@ const specialMethods = {
 
   watch: {
     args: types.union(
+      types.tuple(path),
       types.tuple(
         path,
-        types.union(
-          types.string,
-          types.object({
-            persistent: types.maybe(types.boolean),
-            recursive: types.maybe(types.boolean),
-            encoding: types.maybe(types.string)
-          })
+        types.maybe(
+          types.union(
+            types.string,
+            types.object({
+              persistent: types.maybe(types.boolean),
+              recursive: types.maybe(types.boolean),
+              encoding: types.maybe(types.string)
+            })
+          )
+        )
+      ),
+      types.tuple(path, types.maybe(types.Function)),
+      types.tuple(
+        path,
+        types.maybe(
+          types.union(
+            types.string,
+            types.object({
+              persistent: types.maybe(types.boolean),
+              recursive: types.maybe(types.boolean),
+              encoding: types.maybe(types.string)
+            })
+          )
         ),
         types.maybe(types.Function)
-      ),
-      types.tuple(path, types.maybe(types.Function))
+      )
     ),
     socketMsg: types.object({
       type: types.string,
@@ -591,15 +839,17 @@ const specialMethods = {
 
   watchFile: {
     args: types.union(
+      types.tuple(path, types.Function),
       types.tuple(
         path,
-        types.object({
-          persistent: types.maybe(types.boolean),
-          interval: types.maybe(types.integer)
-        }),
+        types.maybe(
+          types.object({
+            persistent: types.maybe(types.boolean),
+            interval: types.maybe(types.integer)
+          })
+        ),
         types.Function
-      ),
-      types.tuple(path, types.Function)
+      )
     ),
     argsOverWire: types.tuple(
       path,
@@ -613,7 +863,10 @@ const specialMethods = {
   },
 
   unwatchFile: {
-    args: types.tuple(path, types.maybe(types.Function))
+    args: types.union(
+      types.tuple(path),
+      types.tuple(path, types.maybe(types.Function))
+    )
   }
 };
 

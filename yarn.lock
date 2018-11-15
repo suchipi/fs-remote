@@ -9,9 +9,16 @@
     babel-runtime "^6.26.0"
     xmlhttprequest "^1.8.0"
 
+<<<<<<< HEAD
 "@run-on-server/server@3.0.3":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@run-on-server/server/-/server-3.0.3.tgz#6431910eac93f633938af7945f577dc829dfebe7"
+=======
+"@run-on-server/server@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@run-on-server/server/-/server-3.1.0.tgz#17c8846f1c0b2b82af0c84ec5c7a201bd1191348"
+  integrity sha512-QJKmSDSwt5bQNYX2SdF7qXdk85wwYpGafuCj1DZY0UnwRad5M/ApmKPiT6cE6GTuvxSjD2Nm63P+kZWhcNzHEQ==
+>>>>>>> Upgrade deps, fix incorrect tuple unions in defs
   dependencies:
     uid "^0.0.2"
     acorn "^5.3.0"
@@ -3722,10 +3729,18 @@ pbkdf2@^3.0.3:
 pify@3.0.0, pify@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-3.0.0.tgz#e5a4acd2c101fdf3d9a4d07f0dbc4db49dd28176"
+<<<<<<< HEAD
+=======
+  integrity sha1-5aSs0sEB/fPZpNB/DbxNtJ3SgXY=
+>>>>>>> Upgrade deps, fix incorrect tuple unions in defs
 
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
+<<<<<<< HEAD
+=======
+  integrity sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
+>>>>>>> Upgrade deps, fix incorrect tuple unions in defs
 
 pinkie-promise@^2.0.0:
   version "2.0.1"
@@ -4129,12 +4144,22 @@ run-async@^2.2.0:
   dependencies:
     is-promise "^2.1.0"
 
+<<<<<<< HEAD
 run-on-server@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/run-on-server/-/run-on-server-3.1.2.tgz#e4fa45e51cd5eab07e24a81d8b5cc0ace74f1abf"
   dependencies:
     "@run-on-server/client" "2.2.2"
     "@run-on-server/server" "3.0.3"
+=======
+run-on-server@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/run-on-server/-/run-on-server-3.2.0.tgz#c489ef7b28b7b115cb0b61c1c11f96ba65bbf544"
+  integrity sha512-0dDW67JXgFRhAzlpmcW5IUA+iHOZQaMBhhpBzeYEtXlFo6hDJnkeaJhSgFAqrSUZXBDuchI32+rT3OQ+ofUi/A==
+  dependencies:
+    "@run-on-server/client" "2.2.2"
+    "@run-on-server/server" "3.1.0"
+>>>>>>> Upgrade deps, fix incorrect tuple unions in defs
     babel-runtime "^6.26.0"
 
 run-queue@^1.0.0, run-queue@^1.0.3:
@@ -4218,9 +4243,16 @@ send@0.16.2:
     range-parser "~1.2.0"
     statuses "~1.4.0"
 
+<<<<<<< HEAD
 serializable-types@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/serializable-types/-/serializable-types-0.5.0.tgz#b1b677982c288555823eb23b5c8e71ed6294d1ea"
+=======
+serializable-types@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/serializable-types/-/serializable-types-0.6.0.tgz#651e447e883affa6a1564ae152dfe0c0aeb01528"
+  integrity sha512-c6TbZysqm4/nAxOtQmw2P7k9fqQcjI0LBkAX2XavZ6jE6QMDSZ0E+paQBMISfCRn5wFMwDWqvb5HEz9yS+KAqg==
+>>>>>>> Upgrade deps, fix incorrect tuple unions in defs
   dependencies:
     pretty-format "^23.2.0"
 
